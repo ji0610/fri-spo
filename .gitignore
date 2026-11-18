@@ -1,0 +1,11 @@
+# Only source files are published. Compiled binaries and the files the
+# exercises generate stay local.
+*
+!*/
+!*.c
+!*.h
+!*.md
+!Makefile
+!.gitignore
+# Kept locally, not published.
+/vaja_3/pwd3.c
