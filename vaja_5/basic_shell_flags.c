@@ -38,6 +38,17 @@ void parse(char *niz_ukaz, char *args[]) {
     args[i] = NULL;
 }
 
+void parse_strtok(char *niz_ukaz, char *args[]) {
+
+    int i = 0;
+
+    args[i] = strtok(niz_ukaz, " \t");
+    while (args[i] != NULL) {
+        i++;
+        args[i] = strtok(NULL, " \t");
+    }
+}
+
 
 void main() {
     
@@ -45,13 +56,21 @@ void main() {
     char *flags[MAXARG+1];
     pid_t pid;
 
+    int st_ukaza = 1;
+
     while (fgets(buf, MAXLINE, stdin) != NULL) {
         //printf("%s", buf);
 
         buf[strlen(buf) - 1] = '\0';
         if (buf[0] == '\0') continue;
 
-        parse(buf, flags);
+        if (st_ukaza % 2 == 0) {
+            parse(buf, flags);
+        } else {
+            parse_strtok(buf, flags);
+        }
+        st_ukaza++;
+
         if (flags[0] == NULL) continue;
 
         if ( (pid = fork()) < 0) {
